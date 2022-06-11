@@ -330,6 +330,8 @@ export interface ICreateClientOpts {
      */
     forceTURN?: boolean;
 
+    audioProcessing?: boolean;
+
     /**
      * Up to this many ICE candidates will be gathered when an incoming call arrives.
      * Gathering does not send data to the caller, but will communicate with the configured TURN
@@ -904,6 +906,7 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
     public callEventHandler: CallEventHandler; // XXX: Intended private, used in code.
     public supportsCallTransfer = false; // XXX: Intended private, used in code.
     public forceTURN = false; // XXX: Intended private, used in code.
+    public audioProcessing = true;
     public iceCandidatePoolSize = 0; // XXX: Intended private, used in code.
     public idBaseUrl: string;
     public baseUrl: string;
@@ -1034,6 +1037,7 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
         this.cryptoCallbacks = opts.cryptoCallbacks || {};
 
         this.forceTURN = opts.forceTURN || false;
+        this.audioProcessing = opts.audioProcessing || true;
         this.iceCandidatePoolSize = opts.iceCandidatePoolSize === undefined ? 0 : opts.iceCandidatePoolSize;
         this.supportsCallTransfer = opts.supportsCallTransfer || false;
         this.fallbackICEServerAllowed = opts.fallbackICEServerAllowed || false;
@@ -1475,6 +1479,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
      */
     public setForceTURN(force: boolean) {
         this.forceTURN = force;
+    }
+
+    public setAudioProcessing(processing: boolean) {
+        this.audioProcessing = processing;
     }
 
     /**

@@ -253,6 +253,9 @@ export class MediaHandler {
             audio: audio
                 ? {
                     deviceId: this.audioInput ? { ideal: this.audioInput } : undefined,
+                    autoGainControl: this.client.audioProcessing,
+                    echoCancellation: this.client.audioProcessing,
+                    noiseSuppression: this.client.audioProcessing
                 }
                 : false,
             video: video
